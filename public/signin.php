@@ -28,7 +28,6 @@ echo("<div id='contentreg'>");
 if(sizeof($userdata) === 1){
   echo("Successfully logged in! </br>");
   session_start();
-  echo(session_id());
   $_SESSION["username"] = $username;
 }else{
 	echo("Bad username/password. Try again.");

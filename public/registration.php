@@ -9,15 +9,18 @@
 ?>
 
 <div id="content">
-	<h1> Sign In </h1>
-    <form action="signin.php" method="post">
+	<h1> Register </h1>
+    <form action="register.php" method="post">
       User Name:</br>
     <input type="text" name="username"><br>
       Password:</br>
     <input type="password" name="password"></br>
-    <input type="submit" value="Sign In">
+      Retype Password:</br>
+    <input type="password" name="password_retype"></br>
+    <input type="submit" value="Register">
   </form>
-  <a href="registration.php">Register</a>
 </div>
+
+
 
 <?php require("../common/footer.php"); ?>
