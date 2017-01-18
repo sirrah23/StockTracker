@@ -1,4 +1,13 @@
-<?php require("../common/header.php"); ?>
+<?php 
+	session_start();
+	if(isset($_SESSION["username"])){
+		//Already logged in, go to the application
+		header("Location: main.php");
+		exit();
+	}
+	require("../common/header.php");
+?>
+
 <div id="content">
     <form action="signin.php" method="post">
       User Name:</br>
@@ -8,4 +17,5 @@
     <input type="submit" value="Submit">
   </form>
 </div>
+
 <?php require("../common/footer.php"); ?>

@@ -29,3 +29,13 @@ div#content{
   color: white;
   width: 15%;
 }
+
+div#contentreg{
+  margin-top:125px;
+  //margin-left: auto 0;
+  //margin-right: auto 0;
+  padding: 10px;
+  background: white;
+  color: black;
+  width: 15%;
+}

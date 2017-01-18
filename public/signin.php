@@ -2,7 +2,7 @@
 
 require("../common/header.php");
 
-//Define variables
+//TODO: Move database code to it's own function/object
 $username = $_POST["username"];
 $password = $_POST["password"];
 
@@ -20,16 +20,18 @@ $opt = [
 ];
 
 $pdo = new PDO($dsn, $user, $pass, $opt);
-//TODO:Do a prepared statement here
-$stmt = $pdo->query('SELECT * FROM Users');
+$stmt = $pdo->prepare("SELECT username, password FROM Users WHERE username=? AND password=?");
+$stmt->execute(array($username, $password));
+$userdata = $stmt->fetchAll();
 
-//Test
-echo("<div id='content'>");
-echo("Your username is ".$username."</br>");
-echo("Your password is ".$password."\n"."</br>");
-echo("List of user ids and passwords:</br>");
-while($row = $stmt->fetch()){
-  echo($row['username']." ".$row['password']);
+echo("<div id='contentreg'>");
+if(sizeof($userdata) === 1){
+  echo("Successfully logged in! </br>");
+  session_start();
+  echo(session_id());
+  $_SESSION["username"] = $username;
+}else{
+	echo("Bad username/password. Try again.");
 }
 echo("</div>");
 
