@@ -20,8 +20,6 @@ div#footer {
 
 div#content{
   margin-top:125px;
-  //margin-left: auto 0;
-  //margin-right: auto 0;
   border-width: 2px;
   border-style:solid;
   padding: 10px;
@@ -32,10 +30,26 @@ div#content{
 
 div#contentreg{
   margin-top:125px;
-  //margin-left: auto 0;
-  //margin-right: auto 0;
   padding: 10px;
   background: white;
   color: black;
   width: 15%;
+}
+
+div.tickbox{
+  border-width: 2px;
+  border-style:solid;
+  padding: 30px;
+  color: black;
+  width: 35%;
+  position:fixed;
+  left:30%;
+}
+
+span.amount{
+  float: right;
+}
+
+div#portholder{
+  margin-top:125px;
 }
