@@ -53,3 +53,7 @@ span.amount{
 div#portholder{
   margin-top:125px;
 }
+
+div#lookup{
+  float:right;
+}

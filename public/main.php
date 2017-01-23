@@ -26,6 +26,13 @@ $cash_data = $stmt->fetchAll();
 
 ?>
 
+<div id="lookup">
+	<form action="lookup.php" method="get">
+		Stock:</br>
+		<input type="text" name="stockname">
+		<input type="Submit" value="Search">
+	</form>
+</div>
 
 <div id="portholder">
 	<div class="tickbox">
