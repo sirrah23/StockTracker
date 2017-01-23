@@ -57,3 +57,7 @@ div#portholder{
 div#lookup{
   float:right;
 }
+
+div#stockinfo{
+  margin-top:125px;
+}
