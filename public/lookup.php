@@ -5,7 +5,7 @@
 ?>
 
 <?php
-    $stockname = $_GET["stockname"];
+    $stockname = strtoupper($_GET["stockname"]);
     
     //TODO: Move this function somewhere else
     function stock_data($stockname){
@@ -16,16 +16,16 @@
         * - asking price
         * - bidding price
         */
+        $stockname = strtoupper($stockname);
         $fetch_str = "http://finance.yahoo.com/d/quotes.csv?s=".$stockname."&f=ab";
         $data_arr = explode(',', file_get_contents($fetch_str)); 
         $data_assoc = array("stock_name"=>$stockname, "asking_price"=>$data_arr[0], "bidding_price"=>$data_arr[1]) ;
         return $data_assoc;
     };
     $stock_info = stock_data($stockname);
-    var_dump($stock_info);
 ?>
 
-<div id="stockinfo">
+<div id="info">
         <h1><?php echo($stock_info["stock_name"]); ?></h1>
         <h2><?php echo("Asking Price: $".$stock_info["asking_price"]); ?></h2>
         <h2><?php echo("Bidding Price: $".$stock_info["bidding_price"]); ?></h2>
