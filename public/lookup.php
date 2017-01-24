@@ -33,6 +33,8 @@
             <form action="buystock.php" method="post">
                 <input type="hidden" name="stockname" value=<?php echo("\"".$stock_info["stock_name"]."\""); ?> />
                 <input type="hidden" name="askingprice" value=<?php echo("\"".$stock_info["asking_price"]."\""); ?> />
+                Shares:
+                <input type="text" name="shares" />
                 <input type="submit" value="Buy" />
             </form>
         <?php endif; ?>
