@@ -20,14 +20,16 @@ $opt = [
 ];
 
 $pdo = new PDO($dsn, $user, $pass, $opt);
-$stmt = $pdo->prepare("SELECT username, password FROM Users WHERE username=? AND password=?");
+$stmt = $pdo->prepare("SELECT * FROM Users WHERE username=? AND password=?");
 $stmt->execute(array($username, $password));
 $userdata = $stmt->fetchAll();
 
 echo("<div id='contentreg'>");
 if(sizeof($userdata) === 1){
   echo("Successfully logged in! </br>");
+  //Store operating user in session state
   session_start();
+  $_SESSION["userid"] = $userdata[0]["id"];
   $_SESSION["username"] = $username;
 }else{
 	echo("Bad username/password. Try again.");
