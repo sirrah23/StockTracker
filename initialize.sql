@@ -31,11 +31,9 @@ CREATE PROCEDURE `buy_stock` (
 	IN user_id MEDIUMINT,
     IN stock VARCHAR(15),
     IN shares INT,
-    IN price DECIMAL(13,2),
-    OUT message VARCHAR(30)
+    IN price DECIMAL(13,2)
 )
 BEGIN
-	-- TODO: What does this return upon failure?
 	DECLARE cash_new DECIMAL(13,2);
 	DECLARE cash_lost DECIMAL(13,2);
 	DECLARE shares_new INT;
@@ -46,12 +44,20 @@ BEGIN
     START TRANSACTION;
     SET cash_lost = price*shares;
 	SET cash_new = (SELECT amount FROM Cash WHERE Cash.user_id=user_id) - cash_lost;
-	SET shares_new = (SELECT Stocks.shares from Stocks WHERE Stocks.user_id=user_id AND Stocks.stock=stock) + shares;
+	SET shares_new = (SELECT Stocks.shares from Stocks WHERE Stocks.user_id=user_id AND Stocks.stock=stock);
+    
+    IF (ISNULL(shares_new)) THEN
+		-- If user doesn't own stock then do an insert
+		SET shares_new=shares;
+        INSERT INTO Stocks (Stocks.user_id, Stocks.stock, Stocks.shares) VALUES (user_id, stock, shares);
+	ELSE
+		-- If user does own stock then update the shares
+		SET shares_new=shares_new + shares;
+        UPDATE Stocks SET Stocks.shares=shares_new WHERE Stocks.user_id=user_id AND Stocks.stock=stock;
+    END IF;
 	
-	UPDATE Stocks SET Stocks.shares=shares_new WHERE Stocks.user_id=user_id AND Stocks.stock=stock; 
-	UPDATE Cash SET Cash.amount=cash_new WHERE Cash.user_id=user_id;
+    UPDATE Cash SET Cash.amount=cash_new WHERE Cash.user_id=user_id;
 	
-	SET message = "SUCCESS";
     COMMIT;
 END//
 DELIMITER ;

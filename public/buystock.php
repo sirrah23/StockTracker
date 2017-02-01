@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require("../common/header.php");
 	session_start();
 	//TODO: Make sure session has a username
@@ -9,11 +9,12 @@
     $userid = $_SESSION["userid"];
     $username = $_SESSION["username"];
     $stockname = $_POST["stockname"];
-    $price = $_POST["askingprice"];
-    $shares = $_POST["shares"];
+		//TODO: Validate these before casting
+    $price = floatval($_POST["askingprice"]);
+    $shares = intval($_POST["shares"]);
 
     //TODO: Move function somewhere else
-    function update_stock($userid, $stockname, $shares){
+    function update_stock($userid, $stockname, $shares, $price){
         //TODO: Move PDO initialization code to separate place
         $host = '127.0.0.1';
         $db   = 'StockTracker';
@@ -30,9 +31,10 @@
 
         //Get the amount of cash in the account
         $pdo = new PDO($dsn, $user, $pass, $opt);
-        $stmt = $pdo->prepare("INSERT INTO Stocks (user_id, stock, shares) VALUES (?,?,?)");
+        $stmt = $pdo->prepare("CALL buy_stock(?,?,?,?)");
         //TODO: Check this for errors...Try/Catch?
-        $stmt->execute(array($userid, $stockname, $shares));
+        $stmt->execute(array($userid, $stockname, $shares, $price));
+				$stmt->closeCursor();
     }
 ?>
 
@@ -42,10 +44,10 @@
     <?php elseif (!is_numeric($shares)):?>
         Shares are not a valid number. Cannot buy.
     <?php else: ?>
-        <?php 
+        <?php
             //Valid user input
             //TODO: Update user's cash value as well - Consider transaction + stored proc
-            update_stock($userid, $stockname, $shares);
+            update_stock($userid, $stockname, $shares, $price);
             echo($stockname." has been purchased!");
         ?>
     <?php endif; ?>
