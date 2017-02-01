@@ -40,10 +40,12 @@ div.tickbox{
   border-width: 2px;
   border-style:solid;
   padding: 30px;
+  margin:10px;
   color: black;
   width: 35%;
   position:fixed;
   left:30%;
+  position:relative;
 }
 
 span.amount{
