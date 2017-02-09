@@ -10,7 +10,7 @@
     $username = $_SESSION["username"];
     $stockname = $_POST["stockname"];
 		//TODO: Validate these before casting
-    $price = floatval($_POST["askingprice"]);
+    $price = floatval($_POST["biddingprice"]);
     $shares = intval($_POST["shares"]);
 
     //TODO: Move function somewhere else
