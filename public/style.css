@@ -43,7 +43,6 @@ div.tickbox{
   margin:10px;
   color: black;
   width: 35%;
-  position:fixed;
   left:30%;
   position:relative;
 }
@@ -53,7 +52,8 @@ span.amount{
 }
 
 div#portholder{
-  margin-top:125px;
+  margin-top:150px;
+  margin-bottom:150px;
 }
 
 div#lookup{

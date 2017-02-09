@@ -73,12 +73,18 @@ $stock_data = get_stock_data($user_id);
 <div id="portholder">
 	<div class="tickbox">
 	  <span class="ticker"> CASH </span>
-	  <span class="amount"> <?php echo("$".$cash_data[0]["amount"]); ?> </span>
+	  <span class="amount"> <?php echo('$'.$cash_data[0]['amount']); ?> </span>
 	</div>
 	<?php foreach($stock_data as $stock){?>
 	<div class="tickbox">
-	  <span class="ticker"> <?php echo($stock["stock"]);  ?> </span>
-	  <span class="amount"> <?php echo($stock["shares"]); ?> </span>
+	  <span class="ticker"> <?php echo($stock['stock']);  ?> </span>
+	  <span class="amount"> <?php echo($stock['shares']); ?> </span>
+		<form action="sell.php" method="post">
+			<input type="hidden" name="ticker" value=<?php echo($stock['stock']);?>>
+			<input type="number" name="shares_sell" min="1" max=<?php echo($stock['shares']);?>
+			style="width:150px;">
+			<input type="Submit" value="Sell">
+		</form>
 	</div>
 	<?php } ?>
 </div>
