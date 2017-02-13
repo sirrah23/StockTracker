@@ -14,7 +14,7 @@
     $shares = intval($_POST["shares"]);
 
     //TODO: Move function somewhere else
-    function update_stock($userid, $stockname, $shares, $price){
+    function buy_stock($userid, $stockname, $shares, $price){
         //TODO: Move PDO initialization code to separate place
         $host = '127.0.0.1';
         $db   = 'StockTracker';
@@ -47,7 +47,7 @@
         <?php
             //Valid user input
             //TODO: Update user's cash value as well - Consider transaction + stored proc
-            update_stock($userid, $stockname, $shares, $price);
+            buy_stock($userid, $stockname, $shares, $price);
             echo($stockname." has been purchased!");
         ?>
     <?php endif; ?>

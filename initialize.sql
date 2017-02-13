@@ -61,3 +61,34 @@ BEGIN
     COMMIT;
 END//
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE `sell_stock` (
+	IN user_id MEDIUMINT,
+    IN stock VARCHAR(15),
+    IN shares INT,
+    IN price DECIMAL(13,2)
+)
+proc_label:BEGIN
+	DECLARE cash_gain DECIMAL(13,2);
+	DECLARE cash_new DECIMAL(13,2);
+	DECLARE shares_new INT;
+    DECLARE stockpile INT;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+	BEGIN
+		ROLLBACK;
+	END;
+    START TRANSACTION;
+    SET stockpile = (SELECT Stocks.shares from Stocks WHERE Stocks.user_id=user_id AND Stocks.stock=stock);
+    -- TODO: What if somehow the user doesn't own the stock at all?
+    IF (stockpile < shares) THEN
+        LEAVE proc_label;
+    END IF;
+    SET cash_gain = shares*price;
+	SET cash_new = (SELECT amount FROM Cash WHERE Cash.user_id=user_id) + cash_gain;
+	SET shares_new = stockpile - shares;
+	UPDATE Cash SET Cash.amount=cash_new WHERE Cash.user_id=user_id;
+	UPDATE Stocks SET Stocks.shares=shares_new WHERE Stocks.user_id=user_id AND Stocks.stock=stock;
+    COMMIT;
+END//
+DELIMITER ;
