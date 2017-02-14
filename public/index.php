@@ -1,4 +1,4 @@
-<?php 
+<?php
 	session_start();
 	if(isset($_SESSION["username"])){
 		//Already logged in, go to the application
